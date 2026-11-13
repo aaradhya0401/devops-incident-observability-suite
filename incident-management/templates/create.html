@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Incident | IncidentHub</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 35px 20px;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #0b1120;
+            color: #f8fafc;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 30px auto;
+            padding: 35px;
+            background: #131e32;
+            border: 1px solid #26344d;
+            border-radius: 16px;
+        }
+
+        .logo {
+            color: #67e8f9;
+            font-size: 23px;
+            font-weight: 800;
+            margin-bottom: 30px;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        h1 {
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 13px;
+            background: #0b1527;
+            border: 1px solid #334155;
+            border-radius: 9px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: #67e8f9;
+        }
+
+        select option {
+            background: #131e32;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 13px;
+            margin-top: 28px;
+        }
+
+        button, .back-btn {
+            padding: 13px 20px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        button {
+            flex: 1;
+            border: none;
+            background: linear-gradient(110deg, #6366f1, #0891b2);
+            color: white;
+        }
+
+        .back-btn {
+            border: 1px solid #334155;
+            color: #cbd5e1;
+        }
+
+        .message {
+            padding: 12px;
+            margin-bottom: 18px;
+            border-radius: 8px;
+            background: #293a51;
+            color: #bae6fd;
+            font-size: 13px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="logo">Incident<span>Hub.</span></div>
+
+        <h1>Report an Incident</h1>
+
+        <p class="subtitle">
+            Provide the details of the issue you are experiencing.
+        </p>
+
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('create_incident') }}">
+
+            <div class="form-group">
+                <label for="title">Incident Title</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="Example: Server downtime"
+                    maxlength="150"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Explain the problem in detail..."
+                    required
+                ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="priority">Priority Level</label>
+
+                <select id="priority" name="priority" required>
+                    <option value="Low">Low</option>
+                    <option value="Medium" selected>Medium</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                </select>
+            </div>
+
+            <div class="buttons">
+
+                <a href="{{ url_for('dashboard') }}" class="back-btn">
+                    Cancel
+                </a>
+
+                <button type="submit">
+                    Submit Incident →
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+</html>
